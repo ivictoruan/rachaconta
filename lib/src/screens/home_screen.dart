@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
             // CustomTextField(),            
             // porcentagem do garçom
             
-                        
+          
           ],
         ),
       ),

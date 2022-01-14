@@ -11,11 +11,16 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextField(             
               decoration: InputDecoration(  
-                labelText: labelText,        
+                labelText: labelText,
+                hintText: "Digite o $labelText",  
+                prefixIcon: const Icon(Icons.done),              
+                // icon: Icons.ac_unit_outlined,                                  
                 border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(40.0)),                  
+                  // borderSide: BorderSide(color: Colors.green, width: 2.0),
+                  borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                                                                        
                 ),
               ),
             );
