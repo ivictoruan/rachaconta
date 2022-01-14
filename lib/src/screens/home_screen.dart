@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rachaconta/src/core/widgets/action_button.dart';
 import 'package:rachaconta/src/core/widgets/custom_text_field.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,16 +38,19 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
-          children: const [
+          children:  [
             //Estão bebendo?
-            SizedBox(height:20),
-            CustomTextField(labelText: "R\$ 0,00"),
-            SizedBox(height:10),
-            CustomTextField(labelText: "Nº de pessoas"),
-            SizedBox(height:10),
+            const SizedBox(height:20),
+            const CustomTextField(labelText: "R\$ 0,00"),
+            const SizedBox(height:10),
+            const CustomTextField(labelText: "Nº de pessoas"),
+            const SizedBox(height:10),
             // CustomTextField(),            
             // porcentagem do garçom
-            
+            ActionButton(
+              "Rachar a conta",              
+              onPressed: () {  }, 
+            )
           
           ],
         ),
