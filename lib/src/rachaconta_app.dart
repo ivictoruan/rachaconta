@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home_screen/home_screen.dart';
+import 'screens/home_screen.dart';
 
 class RachaContaApp extends StatelessWidget {
   const RachaContaApp({Key? key}) : super(key: key);
@@ -7,12 +7,17 @@ class RachaContaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Racha Pinga e Lanche",
+      title: "Racha Racha",
+      initialRoute: "/",
+      routes: {
+        "/":(context) => const HomeScreen(),
+        // "/history":(context) => const HistoryScreen(),                            
+      },
       
       theme: ThemeData(
-        primarySwatch: Colors.yellow,
+        primarySwatch: Colors.red
+
       ),
-      home: const HomeScreen(title: 'Racha Pinga e Lanche'),
     );
   }
 }
