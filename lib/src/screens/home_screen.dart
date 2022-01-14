@@ -37,6 +37,11 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: const [
+            CustomTextField(),
+            SizedBox(height:10),
+            CustomTextField(),
+            SizedBox(height:10),
+            CustomTextField(),
                         
           ],
         ),
