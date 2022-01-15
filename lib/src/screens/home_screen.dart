@@ -11,14 +11,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // int _counter = 0;
-
-  // void _incrementCounter() { // criar uma função de incrementar a cada uso do app.
-  //   setState(() {
-  //     _counter++;
-  //   });
-  // }
-  //fazer um model com as seguintes variáveis:
   int numPeople = 0;
   int peopleDriking = 0;
   bool isDriking = false;
@@ -30,22 +22,71 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(        
+      appBar: AppBar(      
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(10),
+          ),
+        ),
         title: const Text("Racha Racha"), 
-        centerTitle: true,      
+        centerTitle: true,
+        elevation: 1,
+          leading: IconButton(
+            onPressed: () => {}, 
+            icon: const Icon(Icons.menu),
+          ),
+        actions: [
+            IconButton(
+              onPressed: () => {},
+               icon: const Icon(Icons.history),
+            ),
+          ],       
       ),
 
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(30),
         child: Column(
           children:  [
             //Estão bebendo?
             const SizedBox(height:20),
-            const CustomTextField(labelText: "R\$ 0,00", icon: Icons.price_change_outlined),
+            const CustomTextField(
+              labelText: "R\$ 0,00", 
+              icon: Icons.price_change_outlined
+            ),
             const SizedBox(height:10),
-            const CustomTextField(labelText: "Nº de pessoas", icon: Icons.people_outline_sharp),
-            const SizedBox(height:10),
-            // CustomTextField(),            
+            const CustomTextField(
+              labelText: "Nº de pessoas",
+              icon: Icons.people_outline_sharp
+            ),
+            const SizedBox(height:20),
+            Row(
+              children: [
+                Checkbox(
+                  value: isDriking,
+                   onChanged: (bool? newValue) {
+                    setState(() {
+                      isDriking = newValue!;
+                    });
+                  }
+                ),
+                const Text("Alguém bebendo?")
+              ],
+            ),
+            Text('Porcetagem do garçom: ' +
+                    waiterPercentage.toStringAsFixed(0) +
+                    '%'),
+            Slider(
+                value: waiterPercentage,
+                onChanged: (value) {
+                  setState(() {
+                    waiterPercentage = value;
+                  });
+                },
+                min: 0,
+                max: 100,
+                divisions: 100,
+                label: waiterPercentage.toStringAsFixed(0),
+              ),
             // porcentagem do garçom
             ActionButton(
               "Rachar a conta",              

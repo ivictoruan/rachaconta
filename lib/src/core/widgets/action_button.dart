@@ -5,6 +5,7 @@ class ActionButton extends StatelessWidget {
   final Color foregroundColor;
   final Color backgroundColor;
   final VoidCallback onPressed;
+  final IconData? icon;
 
 
   const ActionButton(
@@ -12,7 +13,7 @@ class ActionButton extends StatelessWidget {
     Key? key, 
     this.foregroundColor = const Color(0xFFF6F6F9), 
     this.backgroundColor = const Color(0xFFFA4A0C),
-    required this.onPressed,
+    required this.onPressed, this.icon,
   }) : super(key: key);
 
   @override
@@ -29,6 +30,7 @@ class ActionButton extends StatelessWidget {
          child: Text(
            text, 
            style: TextStyle(color: foregroundColor)
+                      
          )
         ),
     );
