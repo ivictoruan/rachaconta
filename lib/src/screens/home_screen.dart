@@ -41,9 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
           children:  [
             //Estão bebendo?
             const SizedBox(height:20),
-            const CustomTextField(labelText: "R\$ 0,00"),
+            const CustomTextField(labelText: "R\$ 0,00", icon: Icons.price_change_outlined),
             const SizedBox(height:10),
-            const CustomTextField(labelText: "Nº de pessoas"),
+            const CustomTextField(labelText: "Nº de pessoas", icon: Icons.people_outline_sharp),
             const SizedBox(height:10),
             // CustomTextField(),            
             // porcentagem do garçom

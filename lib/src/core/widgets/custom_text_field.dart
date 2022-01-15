@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   
   final String labelText;
+  final IconData? icon;
   
   const CustomTextField(
     {
-      Key? key, required this.labelText,
+      Key? key, required this.labelText, this.icon,
     }) : super(key: key);
 
   @override
@@ -15,7 +16,7 @@ class CustomTextField extends StatelessWidget {
               decoration: InputDecoration(  
                 labelText: labelText,
                 hintText: "Digite o $labelText",  
-                prefixIcon: const Icon(Icons.done),              
+                prefixIcon:icon == null ? null : Icon(icon),              
                 // icon: Icons.ac_unit_outlined,                                  
                 border: const OutlineInputBorder(
                   // borderSide: BorderSide(color: Colors.green, width: 2.0),

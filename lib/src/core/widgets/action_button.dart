@@ -18,13 +18,13 @@ class ActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double _screenWidth = MediaQuery.of(context).size.width;
-    return TextButton(
+    return TextButton(      
       onPressed: onPressed, // método
        child: Container(
          padding: EdgeInsets.symmetric(vertical: 14, horizontal: _screenWidth * 0.25  ),
          decoration: BoxDecoration( 
            borderRadius: BorderRadius.circular(15), 
-           color: backgroundColor,          
+           color: backgroundColor,                     
            ), 
          child: Text(
            text, 
