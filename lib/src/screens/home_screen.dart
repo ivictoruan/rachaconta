@@ -11,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int numPeople = 0;
+  int numPeople = 1;
   int peopleDriking = 0;
   bool isDriking = false;
   double totalPrice = 0.0;
@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
             IconButton(
               onPressed: () => {},
-               icon: const Icon(Icons.history),
+               icon: const Icon(Icons.history),               
             ),
           ],       
       ),
