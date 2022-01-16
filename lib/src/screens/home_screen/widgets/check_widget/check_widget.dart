@@ -112,8 +112,8 @@ class _CheckWidgetState extends State<CheckWidget> {
                 },
                 min: 0,
                 max: 100,
-                divisions: 100,
-                label: waiterPercentage.toStringAsFixed(0),
+                divisions: 20,
+                label: waiterPercentage.toStringAsFixed(0), // toStringAsFixed(0) para não ter casas decimais
               ),
             // porcentagem do garçom
             ActionButton(
