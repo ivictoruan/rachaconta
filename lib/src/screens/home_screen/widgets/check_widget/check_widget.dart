@@ -84,6 +84,7 @@ class _CheckWidgetState extends State<CheckWidget> {
             const SizedBox(height:10),
             const CustomTextField(
               labelText: "Nº de pessoas",
+              hintText: "1",
               icon: Icons.people_outline_sharp
             ),
             const SizedBox(height:20),
@@ -105,6 +106,7 @@ class _CheckWidgetState extends State<CheckWidget> {
                     '%'),
             Slider(
                 value: waiterPercentage,
+                // numberFormat: NumberFormat("R\$"),
                 onChanged: (value) {
                   setState(() {
                     waiterPercentage = value;
