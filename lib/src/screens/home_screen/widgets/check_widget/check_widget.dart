@@ -70,61 +70,78 @@ class _CheckWidgetState extends State<CheckWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(45),
-        child: Column(
-          children:  [
-            //Estão bebendo?
-            const SizedBox(height:20),
-            const CustomTextField(
-              labelText: "R\$ 0,00 Total", 
-              icon: Icons.price_change_outlined,
-              keyboardType: TextInputType.number,
-            ),
-            const SizedBox(height:10),
-            const CustomTextField(
-              labelText: "Nº de pessoas",
-              hintText: "1",
-              icon: Icons.people_outline_sharp
-            ),
-            const SizedBox(height:20),
-            Row(
-              children: [
-                Checkbox(
-                  value: isDriking,
-                   onChanged: (bool? newValue) {
-                    setState(() {
-                      isDriking = newValue!;
-                    });
-                  }
-                ),
-                const Text("Alguém bebendo?")
-              ],
-            ),
-            Text('Porcetagem do garçom: ' +
-                    waiterPercentage.toStringAsFixed(0) +
-                    '%'),
-            Slider(
-                value: waiterPercentage,
-                // numberFormat: NumberFormat("R\$"),
-                onChanged: (value) {
-                  setState(() {
-                    waiterPercentage = value;
-                  });
-                },
-                min: 0,
-                max: 100,
-                divisions: 20,
-                label: waiterPercentage.toStringAsFixed(0), // toStringAsFixed(0) para não ter casas decimais
+    final formKey = GlobalKey<FormState>();
+    return Form(
+      key: formKey,
+        // autovalidateMode: AutovalidateMode.onUserInteraction,
+      child: Padding(        
+          padding: const EdgeInsets.all(45),
+          child: Column(
+            children:  [
+              
+              //Estão bebendo?
+              const SizedBox(height:20),
+              const CustomTextField(
+                labelText: "R\$ 0,00 Total", 
+                icon: Icons.price_change_outlined,
+                keyboardType: TextInputType.number,
+                // validator: (value) {
+                //       if (value.isEmpty) {
+                //         return 'O valor da conta não pode ser vazio!';
+                //       } else if (double.tryParse(value) == null) {
+                //         return 'O valor precisa ser numérico!';
+                //       }
+    
+                //       return null;
+                //     },
               ),
-            // porcentagem do garçom
-            ActionButton(
-              "Rachar a conta",              
-              onPressed: () {  }, 
-            )
-          
-          ],
+              const SizedBox(height:10),
+              const CustomTextField(
+                labelText: "Nº de pessoas",
+                hintText: "1",
+                icon: Icons.people_outline_sharp
+              ),
+              const SizedBox(height:20),
+              Row(
+                children: [
+                  Checkbox(
+                    value: isDriking,
+                     onChanged: (bool? newValue) {
+                      setState(() {
+                        isDriking = newValue!;
+                      });
+                    }
+                  ),
+                  const Text("Alguém bebendo?")
+                ],
+              ),
+              Text('Porcetagem do garçom: ' +
+                      waiterPercentage.toStringAsFixed(0) +
+                      '%'),
+              Slider(
+                  value: waiterPercentage,
+                  // numberFormat: NumberFormat("R\$"),
+                  onChanged: (value) {
+                    setState(() {
+                      waiterPercentage = value;
+                    });
+                  },
+                  min: 0,
+                  max: 100,
+                  divisions: 20,
+                  label: waiterPercentage.toStringAsFixed(0), // toStringAsFixed(0) para não ter casas decimais
+                ),           
+              ActionButton(
+                "Rachar a conta",              
+                onPressed: () {
+                  formKey.currentState?.validate();
+                  // Navigator.pushNamed(context, '/checkresult');
+                 }, 
+              ),
+              
+            ],
+          ),
         ),
-      );
+    );
   }
 }

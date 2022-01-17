@@ -14,8 +14,9 @@ class _HomeScreenState extends State<HomeScreen> {
   
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(      
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
@@ -37,9 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ],       
       ),
 
-      body: const SafeArea(
-        child: CheckWidget()
-      ),
+      body: const CheckWidget(),
+      
      
     );
   }

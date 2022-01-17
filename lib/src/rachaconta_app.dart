@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rachaconta/src/screens/check_result_screen/check_result_screen.dart';
 import 'screens/home_screen/home_screen.dart';
 
 class RachaContaApp extends StatelessWidget {
@@ -11,6 +12,7 @@ class RachaContaApp extends StatelessWidget {
       initialRoute: "/",
       routes: {
         "/":(context) => const HomeScreen(),
+        "/checkresult":(context) => const CheckResultScreen(),
         // "/history":(context) => const HistoryScreen(),                            
       },
       
