@@ -77,31 +77,45 @@ class _CheckWidgetState extends State<CheckWidget> {
       child: Padding(        
           padding: const EdgeInsets.all(45),
           child: Column(
-            children:  [
-              
-              //Estão bebendo?
+            children:  [              
               const SizedBox(height:20),
-              const CustomTextField(
+              
+              CustomTextField(
                 labelText: "R\$ 0,00 Total", 
                 icon: Icons.price_change_outlined,
                 keyboardType: TextInputType.number,
-                // validator: (value) {
-                //       if (value.isEmpty) {
-                //         return 'O valor da conta não pode ser vazio!';
-                //       } else if (double.tryParse(value) == null) {
-                //         return 'O valor precisa ser numérico!';
-                //       }
-    
-                //       return null;
-                //     },
+                validator: (value) {
+                    if (value == null || value.isEmpty ) {
+                      return 'O valor da conta não pode ser vazio!';
+                    } else if (double.tryParse(value) == null) {
+                      return 'O valor precisa ser numérico!';
+                    }
+
+                    return null;
+                  },
               ),
+
               const SizedBox(height:10),
-              const CustomTextField(
+
+              CustomTextField(
                 labelText: "Nº de pessoas",
                 hintText: "1",
-                icon: Icons.people_outline_sharp
+                icon: Icons.people_outline_sharp,
+                validator: (value) {
+                    if (value == null || value.isEmpty ) {
+                      return 'O número de pessoas não pode ser vazio!';
+                    } else if (int.tryParse(value) == null) {
+                      return 'O número de pessoas precisa ser numérico!';
+                    }else if ( int.tryParse(value)! < 1){
+                      return 'O número de pessoas precisa ser maior que 0!';
+                    }
+
+                    return null;
+                  },
               ),
+
               const SizedBox(height:20),
+
               Row(
                 children: [
                   Checkbox(
@@ -115,9 +129,11 @@ class _CheckWidgetState extends State<CheckWidget> {
                   const Text("Alguém bebendo?")
                 ],
               ),
+
               Text('Porcetagem do garçom: ' +
                       waiterPercentage.toStringAsFixed(0) +
                       '%'),
+
               Slider(
                   value: waiterPercentage,
                   // numberFormat: NumberFormat("R\$"),
@@ -130,7 +146,8 @@ class _CheckWidgetState extends State<CheckWidget> {
                   max: 100,
                   divisions: 20,
                   label: waiterPercentage.toStringAsFixed(0), // toStringAsFixed(0) para não ter casas decimais
-                ),           
+                ),  
+
               ActionButton(
                 "Rachar a conta",              
                 onPressed: () {

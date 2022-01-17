@@ -6,11 +6,12 @@ class CustomTextField extends StatelessWidget {
   final IconData? icon;
   final TextInputType? keyboardType;
   final String? hintText;
-  final String? validator;
+  final String? Function(String? text)? validator;
+  final void Function(String? text)? onSaved;
   
   const CustomTextField(
     {
-      Key? key, required this.labelText, this.icon, this.keyboardType, this.hintText, this.validator,
+      Key? key, required this.labelText, this.icon, this.keyboardType, this.hintText, this.validator, this.onSaved,
     }) : super(key: key);
 
   @override
@@ -25,11 +26,8 @@ class CustomTextField extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(40.0)),                                                                        
                 ),                
               ),
-              validator: (text)  {
-                if (text!.isEmpty){
-                  return "Você precisa informa um valor válido!";
-                }
-              },
+              validator: validator,
+              onSaved: onSaved,
             );
   }
 }
