@@ -3,8 +3,6 @@ import 'package:rachaconta/src/core/widgets/action_button.dart';
 import 'package:rachaconta/src/core/widgets/custom_text_field.dart';
 import 'package:rachaconta/src/screens/check_result_screen/check_result_screen.dart';
 
-import 'forms/is_driking_text_form_field.dart';
-
 
 class CheckWidget extends StatefulWidget {
   const CheckWidget({ Key? key }) : super(key: key);
@@ -13,10 +11,8 @@ class CheckWidget extends StatefulWidget {
   _CheckWidgetState createState() => _CheckWidgetState();
 }
 
-
 class _CheckWidgetState extends State<CheckWidget> {
     final formKey = GlobalKey<FormState>();
-
 
   double _totalPrice = 0;
   int _numPeople = 1;
@@ -25,9 +21,6 @@ class _CheckWidgetState extends State<CheckWidget> {
   int _numDrinkers = 0;
   double _drinkPrice = 0;
   
-
-
-
   void doCheck(){
     if(formKey.currentState!.validate()){
       formKey.currentState!.save();
@@ -184,7 +177,6 @@ class _CheckWidgetState extends State<CheckWidget> {
       CustomTextField(
         labelText: 'Nº de pessoas bebendo',
         enabled: _isDriking,        
-        // decoration: const InputDecoration(border: OutlineInputBorder()),
         keyboardType: TextInputType.number,
         onSaved: (value) {
           _numDrinkers = int.parse(value!);

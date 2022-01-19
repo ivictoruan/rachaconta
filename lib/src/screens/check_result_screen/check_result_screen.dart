@@ -51,7 +51,7 @@ class _CheckResultScreenState extends State<CheckResultScreen> {
             Padding(              
               padding: const EdgeInsets.all(40.0),
               child: Text(
-                'Valor para que não bebeu: R\$${widget.individualPrice.toStringAsFixed(2)}',
+                'Valor para cada: R\$${widget.individualPrice.toStringAsFixed(2)}',
                 style: Theme.of(context).textTheme.headline4,                
               ),
             ),

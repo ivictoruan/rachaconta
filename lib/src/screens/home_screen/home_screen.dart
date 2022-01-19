@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rachaconta/src/screens/home_screen/widgets/check_widget/check_widget.dart';
+import 'package:rachaconta/src/screens/home_screen/widgets/navigation_drawer_widget/navigation_drawer_widget.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {    
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      drawer: NavigationDrawerWidget() ,
       appBar: AppBar(      
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
@@ -26,10 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text("Racha Racha"), 
         centerTitle: true,
         elevation: 1,
-          leading: IconButton(
-            onPressed: () => {}, 
-            icon: const Icon(Icons.menu),
-          ),
+        
         actions: [
             IconButton(
               onPressed: () => {},
