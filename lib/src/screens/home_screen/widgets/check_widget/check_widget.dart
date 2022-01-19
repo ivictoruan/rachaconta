@@ -31,14 +31,51 @@ class _CheckWidgetState extends State<CheckWidget> {
   void doCheck(){
     if(formKey.currentState!.validate()){
       formKey.currentState!.save();
+      if (_numDrinkers> _numPeople) {
+        showDialog(
+            context: context,
+            builder: (ctx) => const AlertDialog(
+                  title: Text('Erro'),
+                  content: Text(
+                      'O número de pessoas bebendo não pode ser maior que o número total de pessoas!'),
+                ));
+        return;
+      }
+
+      if (_totalPrice < _drinkPrice) {
+        showDialog(
+            context: context,
+            builder: (ctx) => const AlertDialog(
+                  title: Text('Erro'),
+                  content: Text(
+                      'O preço das bebidas não pode ser superior ao preço do total da conta!'),
+                ));
+        return;
+      }
+
+      if (!_isDriking) {
+        _numDrinkers = 0;
+        _drinkPrice = 0;
+      }
+
+      double waiterValue = (_waiterPercentage / 100) * _totalPrice;
+      _totalPrice += waiterValue;
+
+      double individualPrice = (_totalPrice - _drinkPrice) / _numPeople; //preço individual(sem)
+
+      double priceWhoDrank = 0;
+      if (_numDrinkers > 0) {
+        priceWhoDrank = individualPrice + (_drinkPrice / _numDrinkers);
+      }
+
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => CheckResultScreen(
             totalPrice: _totalPrice,
-            numPeople: _numPeople,
-            isDriking: _isDriking,
-            waiterPercentage: _waiterPercentage/100
+            individualPrice: individualPrice,
+            priceWhoDrank: priceWhoDrank,
+            waiterValue: waiterValue,
           ),
         ),
       );
@@ -52,10 +89,10 @@ class _CheckWidgetState extends State<CheckWidget> {
     return Form(
       key: formKey,
       child: Padding(        
-          padding: const EdgeInsets.all(45),
+          padding: const EdgeInsets.all(25),
           child: Column(
             children:  [              
-              const SizedBox(height:20),
+              // const SizedBox(height:10),
               
               CustomTextField(
                 // initialValue: _totalPrice.toStringAsFixed(2),
@@ -95,7 +132,7 @@ class _CheckWidgetState extends State<CheckWidget> {
                 onSaved: (value) => _numPeople = int.parse(value!),
               ),
 
-              const SizedBox(height:20),
+              const SizedBox(height:10),
 
               Row(
                 children: [
@@ -111,7 +148,7 @@ class _CheckWidgetState extends State<CheckWidget> {
                 ],
               ),
 
-              if (_isDriking)... isDrikingTextFormField(_isDriking, _numDrinkers, _drinkPrice),
+              if (_isDriking)... isDrikingTextFormField(),
 
               Text('Gorjeta do garçom: ' +
                       _waiterPercentage.toStringAsFixed(0) +
@@ -142,5 +179,48 @@ class _CheckWidgetState extends State<CheckWidget> {
         ),
     );
   }
-  
+  List<Widget> isDrikingTextFormField( ){
+    return [
+      CustomTextField(
+        labelText: 'Nº de pessoas bebendo',
+        enabled: _isDriking,        
+        // decoration: const InputDecoration(border: OutlineInputBorder()),
+        keyboardType: TextInputType.number,
+        onSaved: (value) {
+          _numDrinkers = int.parse(value!);
+        },
+        validator: (value) {
+          if (value == null ||value.isEmpty ) {
+            return 'O número de pessoas não pode ser vazio!';
+          } else if (int.tryParse(value) == null) {
+            return 'O valor precisa ser numérico!';
+          }else if ( int.tryParse(value)! < 1){
+            return 'Nº de pessoas precisa ser maior que 0!';
+          }else if ( int.tryParse(value)! > _numPeople){
+            return 'Nº de pessoas bebendo maior do que o total de pessoas!';
+          }
+          return null;
+        },         
+      ),
+      const SizedBox(height:10),
+      CustomTextField(
+        labelText: 'Valor das bebidas R\$',
+        enabled: _isDriking,
+        keyboardType: TextInputType.number,
+        onSaved: (value) {
+          _drinkPrice = double.parse(value!);
+        },
+        validator: (value) {
+          if (value == null ||value.isEmpty) {
+            return 'O valor da conta não pode ser vazio!';
+          } else if (double.tryParse(value) == null) {
+            return 'O valor precisa ser numérico!';
+          }else if ( double.tryParse(value)! < 0){
+            return 'O valor precisa ser maior que 0!';
+          }
+          return null;
+        },         
+      )
+    ];
+  }
 }

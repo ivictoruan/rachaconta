@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rachaconta/src/core/widgets/custom_text_field.dart';
 
-List<Widget> isDrikingTextFormField(bool _isDriking, int _numDrinkers, double _drinkPrice ){
+List<Widget> isDrikingTextFormField(bool _isDriking, int _numDrinkers, double _drinkPrice, int _numPeople ){
     return [
       CustomTextField(
         labelText: 'Nº de pessoas bebendo',
@@ -17,7 +17,9 @@ List<Widget> isDrikingTextFormField(bool _isDriking, int _numDrinkers, double _d
           } else if (int.tryParse(value) == null) {
             return 'O valor precisa ser numérico!';
           }else if ( int.tryParse(value)! < 1){
-            return 'O número de pessoas precisa ser maior que 0!';
+            return 'Nº de pessoas precisa ser maior que 0!';
+          }else if ( int.tryParse(value)! > _numPeople){
+            return 'Nº de pessoas bebendo maior do que o total de pessoas!';
           }
           return null;
         },         
@@ -35,6 +37,8 @@ List<Widget> isDrikingTextFormField(bool _isDriking, int _numDrinkers, double _d
             return 'O valor da conta não pode ser vazio!';
           } else if (double.tryParse(value) == null) {
             return 'O valor precisa ser numérico!';
+          }else if ( double.tryParse(value)! < 0){
+            return 'O valor precisa ser maior que 0!';
           }
           return null;
         },         

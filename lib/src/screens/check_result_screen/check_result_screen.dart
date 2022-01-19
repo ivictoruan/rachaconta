@@ -4,18 +4,17 @@ import 'package:flutter/material.dart';
 class CheckResultScreen extends StatefulWidget {
   
   final double totalPrice;
-  final int numPeople;
-  final double waiterPercentage;
-  final bool isDriking;
-  // final int numDrinkers;
-  // final double pricePerPerson;
+  final double individualPrice;
+  final double priceWhoDrank;
+  final double waiterValue;
+
 
   const CheckResultScreen({
     Key? key,
     required this.totalPrice, 
-    required this.numPeople, 
-    required this.isDriking, 
-    required this.waiterPercentage,
+    required this.individualPrice, 
+    required this.priceWhoDrank, 
+    required this.waiterValue,
   }) : super(key: key);
 
   @override
@@ -45,10 +44,32 @@ class _CheckResultScreenState extends State<CheckResultScreen> {
             Padding(
               padding: const EdgeInsets.all(40.0),
               child: Text(
-                'Cada um deve pagar: R\$${widget.totalPrice / widget.numPeople} (sem gorjeta)',
+                'Valor total da conta: R\$${widget.totalPrice.toStringAsFixed(2)}',
                 style: Theme.of(context).textTheme.headline4,
               ),
-            ),        
+            ),
+            Padding(              
+              padding: const EdgeInsets.all(40.0),
+              child: Text(
+                'Valor para que não bebeu: R\$${widget.individualPrice.toStringAsFixed(2)}',
+                style: Theme.of(context).textTheme.headline4,                
+              ),
+            ),
+            if(widget.priceWhoDrank>0)...{ Padding(
+              padding: const EdgeInsets.all(40.0),
+              child: Text(
+                'Valor para que bebeu: R\$${widget.priceWhoDrank.toStringAsFixed(2)}',
+                style: Theme.of(context).textTheme.headline4,
+              ),
+            ),
+            },
+            Padding(
+              padding: const EdgeInsets.all(40.0),
+              child: Text(
+                'Valor da gorjeta: R\$${widget.waiterValue.toStringAsFixed(2)}',
+                style: Theme.of(context).textTheme.headline4,
+              ),
+            ),                 
           ],
         ),
       ),
