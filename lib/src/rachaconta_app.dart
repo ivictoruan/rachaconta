@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rachaconta/src/screens/check_result_screen/check_result_screen.dart';
+// import 'package:rachaconta/src/screens/check_result_screen/check_result_screen.dart';
 import 'screens/home_screen/home_screen.dart';
 
 class RachaContaApp extends StatelessWidget {
@@ -8,11 +8,12 @@ class RachaContaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: "Racha Racha",
       initialRoute: "/",
       routes: {
         "/":(context) => const HomeScreen(),
-        "/checkresult":(context) => const CheckResultScreen(),
+        // "/checkresult":(context) => const CheckResultScreen(),
         // "/history":(context) => const HistoryScreen(),                            
       },
       

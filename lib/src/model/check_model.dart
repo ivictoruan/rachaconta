@@ -10,13 +10,15 @@ class CheckModel {
   final double drinkPrice;
   // poderia adicionar um campo para adicionar o local onde a conta foi feita! (funcinalidade de mostrar no mapa?)
 
-  CheckModel({
+  const CheckModel({
     this.totalPrice = 0.0,
     this.isDriking = false,
     this.numPeople = 1, 
     this.peopleDriking = 0, 
     this.drinkPrice = 0.0,
     this.waiterPercentage = 10 });
+
+  get totalValue => null;
   
   CheckModel copyWith({
     bool? isDriking,

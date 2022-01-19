@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rachaconta/src/core/widgets/action_button.dart';
 import 'package:rachaconta/src/core/widgets/custom_text_field.dart';
-import 'package:rachaconta/src/screens/home_screen/widgets/check_widget/check_widget_controller.dart';
+import 'package:rachaconta/src/screens/check_result_screen/check_result_screen.dart';
+
+import 'forms/is_driking_text_form_field.dart';
 
 
 class CheckWidget extends StatefulWidget {
@@ -13,67 +15,42 @@ class CheckWidget extends StatefulWidget {
 
 
 class _CheckWidgetState extends State<CheckWidget> {
+    final formKey = GlobalKey<FormState>();
 
-  final CheckWidgetController _controller = CheckWidgetController();
 
-  final TextEditingController _totalPriceTextController = TextEditingController();
-  final TextEditingController _numPeopleTextController = TextEditingController();
-  // final TextEditingController _isDrikingTextController = TextEditingController();
-  // final TextEditingController _waiterPercentageTextController = TextEditingController();
-
-  String _totalPrice = "";
-  String _numPeople = "";
-  int peopleDriking = 0;
-  bool isDriking = false;
-  double drinkPrice = 0.0;
-  double waiterPercentage = 10; // garçom
+  double _totalPrice = 0;
+  int _numPeople = 1;
+  double _waiterPercentage = 10; // garçom
+  bool _isDriking = false;
+  int _numDrinkers = 0;
+  double _drinkPrice = 0;
   
-  String _errorMsg = "";
 
-  
-  @override
-  void initState(){
-    super.initState();
-    _totalPriceTextController.addListener(() => { 
-      _totalPrice = _totalPriceTextController.text }
-    );
-    _numPeopleTextController.addListener(() => {
-      _numPeople = _numPeopleTextController.text });
-  }
 
-  @override
-    void dispose(){
-      super.dispose();
 
-      _numPeopleTextController.dispose();
-      _totalPriceTextController.dispose();
-
+  void doCheck(){
+    if(formKey.currentState!.validate()){
+      formKey.currentState!.save();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CheckResultScreen(
+            totalPrice: _totalPrice,
+            numPeople: _numPeople,
+            isDriking: _isDriking,
+            waiterPercentage: _waiterPercentage/100
+          ),
+        ),
+      );
     }
 
-  // void doCheck(){
-  //     if(_controller.check(_totalPrice, _numPeople)) {      
-  //       setState(() {
-  //         _errorMsg = "";
-  //       });
+  }
 
-  //       // print("Login was realized with success");
-  //       // Navigator.pushReplacementNamed(context, "/home");
-
-  //     } else {
-  //       setState(() {
-  //         _errorMsg = "Valores inválidos!";
-  //       });
-
-  //       // print("Login Error!");
-  //     }
-  // }
-
+  
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
     return Form(
       key: formKey,
-        // autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Padding(        
           padding: const EdgeInsets.all(45),
           child: Column(
@@ -81,6 +58,7 @@ class _CheckWidgetState extends State<CheckWidget> {
               const SizedBox(height:20),
               
               CustomTextField(
+                // initialValue: _totalPrice.toStringAsFixed(2),
                 labelText: "R\$ 0,00 Total", 
                 icon: Icons.price_change_outlined,
                 keyboardType: TextInputType.number,
@@ -90,16 +68,19 @@ class _CheckWidgetState extends State<CheckWidget> {
                     } else if (double.tryParse(value) == null) {
                       return 'O valor precisa ser numérico!';
                     }
-
                     return null;
                   },
+                onSaved: (value) => _totalPrice = double.parse(value!),  
+
               ),
 
               const SizedBox(height:10),
 
               CustomTextField(
+                // initialValue: _numPeople.toString(),
                 labelText: "Nº de pessoas",
                 hintText: "1",
+                keyboardType: TextInputType.number,
                 icon: Icons.people_outline_sharp,
                 validator: (value) {
                     if (value == null || value.isEmpty ) {
@@ -109,9 +90,9 @@ class _CheckWidgetState extends State<CheckWidget> {
                     }else if ( int.tryParse(value)! < 1){
                       return 'O número de pessoas precisa ser maior que 0!';
                     }
-
                     return null;
-                  },
+                },
+                onSaved: (value) => _numPeople = int.parse(value!),
               ),
 
               const SizedBox(height:20),
@@ -119,10 +100,10 @@ class _CheckWidgetState extends State<CheckWidget> {
               Row(
                 children: [
                   Checkbox(
-                    value: isDriking,
+                    value: _isDriking,
                      onChanged: (bool? newValue) {
                       setState(() {
-                        isDriking = newValue!;
+                        _isDriking = newValue!;                        
                       });
                     }
                   ),
@@ -130,35 +111,36 @@ class _CheckWidgetState extends State<CheckWidget> {
                 ],
               ),
 
-              Text('Porcetagem do garçom: ' +
-                      waiterPercentage.toStringAsFixed(0) +
+              if (_isDriking)... isDrikingTextFormField(_isDriking, _numDrinkers, _drinkPrice),
+
+              Text('Gorjeta do garçom: ' +
+                      _waiterPercentage.toStringAsFixed(0) +
                       '%'),
 
               Slider(
-                  value: waiterPercentage,
-                  // numberFormat: NumberFormat("R\$"),
+                  value: _waiterPercentage.toDouble(), 
                   onChanged: (value) {
                     setState(() {
-                      waiterPercentage = value;
+                      _waiterPercentage = value.toDouble();
                     });
                   },
                   min: 0,
                   max: 100,
                   divisions: 20,
-                  label: waiterPercentage.toStringAsFixed(0), // toStringAsFixed(0) para não ter casas decimais
+                  label: _waiterPercentage.toStringAsFixed(0), // toStringAsFixed(0) para não ter casas decimais
+
                 ),  
 
               ActionButton(
                 "Rachar a conta",              
                 onPressed: () {
-                  formKey.currentState?.validate();
-                  // Navigator.pushNamed(context, '/checkresult');
+                  doCheck();
                  }, 
-              ),
-              
+              ),              
             ],
           ),
         ),
     );
   }
+  
 }
